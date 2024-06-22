@@ -24,6 +24,7 @@ db.connect((err) => {
 
 app.post('/api/register',async (req, res) => {
     const { email, password } = req.body;
+    console.log('email, password:', email, password);
     const query = 'INSERT INTO users (email, password) VALUES (?, ?)';
     try {
         const [result] = await db.query(query, [email, password]);
