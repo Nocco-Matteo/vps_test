@@ -22,32 +22,34 @@ db.connect((err) => {
     console.log('Connected to database.');
 });
 
-app.post('/api/register', (req, res) => {
+app.post('/api/register',async (req, res) => {
     const { email, password } = req.body;
     const query = 'INSERT INTO users (email, password) VALUES (?, ?)';
-    db.query(query, [email, password], (err, result) => {
-        if (err) {
-            res.status(500).send('Error registering user');
-        } else {
-            const user = { id: result.insertId, email }; // Restituisci i dati dell'utente
-            res.status(200).json(user);
-        }
-    });
+    try {
+        const [result] = await db.query(query, [email, password]);
+        const user = { id: result.insertId, email };
+        res.status(200).json(user);
+    } catch (err) {
+        console.error('Error inserting user:', err);
+        res.status(500).send('Error registering user');
+    }
 });
 
-app.post('/api/login', (req, res) => {
+app.post('/api/login', async (req, res) => {
     const { email, password } = req.body;
     const query = 'SELECT * FROM users WHERE email = ? AND password = ?';
-    db.query(query, [email, password], (err, results) => {
-        if (err) {
-            res.status(500).send('Error logging in');
-        } else if (results.length > 0) {
+    try {
+        const [results] = await db.query(query, [email, password]);
+        if (results.length > 0) {
             const user = results[0];
-            res.status(200).json(user);  // Invia i dati utente come JSON
+            res.status(200).json(user);
         } else {
             res.status(401).send('Invalid credentials');
         }
-    });
+    } catch (err) {
+        console.error('Error selecting user:', err);
+        res.status(500).send('Error logging in');
+    }
 });
 
 app.get("/api", async (req, res) => {
