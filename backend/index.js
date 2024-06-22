@@ -13,11 +13,11 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const db = mysql.createConnection({
-    host: process.env.DB_HOST || 'mysql',
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASS || 'password',
-    database: process.env.DB_NAME || 'testdb'
-});
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME
+}).promise()
 
 db.connect((err) => {
     if (err) {
