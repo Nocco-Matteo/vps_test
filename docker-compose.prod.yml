@@ -5,13 +5,19 @@ services:
       context: ./frontend
     ports:
       - "80:80"
+  
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
     depends_on:
       - backend
 
   backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile
     ports:
       - "3001:3001"
     environment:
