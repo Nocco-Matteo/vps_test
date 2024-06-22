@@ -55,6 +55,14 @@ app.post('/api/login', (req, res) => {
     });
 });
 
+app.get("/api", async (req, res) => {
+    try {
+        res.status(200).send("we we sono l'api nodejs!");
+    } catch (e) {
+        console.log(e);
+    }
+});
+
 app.listen(3001, () => {
     console.log('Server running on port 3001');
 });
