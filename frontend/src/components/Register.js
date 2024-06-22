@@ -14,7 +14,7 @@ const Register = () => {
         setLoading(true);
         setMessage('');
         try {
-            const response = await fetch('http://172.21.0.3:3001/register', {
+            const response = await fetch('http://172.21.0.3:3001/api/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

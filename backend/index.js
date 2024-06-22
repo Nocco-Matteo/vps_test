@@ -27,7 +27,7 @@ db.connect((err) => {
     console.log('Connected to database.');
 });
 
-app.post('/register', (req, res) => {
+app.post('/api/register', (req, res) => {
     const { email, password } = req.body;
     const query = 'INSERT INTO users (email, password) VALUES (?, ?)';
     db.query(query, [email, password], (err, result) => {
@@ -40,7 +40,7 @@ app.post('/register', (req, res) => {
     });
 });
 
-app.post('/login', (req, res) => {
+app.post('/api/login', (req, res) => {
     const { email, password } = req.body;
     const query = 'SELECT * FROM users WHERE email = ? AND password = ?';
     db.query(query, [email, password], (err, results) => {
