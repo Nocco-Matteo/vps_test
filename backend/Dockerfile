@@ -1,10 +1,5 @@
 FROM node:14
 
-RUN apt-get update && apt-get upgrade -y && apt-get install -y \
-    curl \
-    gnupg \
-    build-essential
-
 WORKDIR /app
 
 COPY package*.json ./
