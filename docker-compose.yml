@@ -1,5 +1,11 @@
 version: '3.7'
 services:
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+  
   nginx:
     build:
       context: ./nginx
@@ -9,17 +15,17 @@ services:
     depends_on:
       - backend
 
-  frontend:
-    container_name: frontend
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-
   backend:
     build:
       context: ./backend
     ports:
       - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - DB_HOST=mysql
+      - DB_USER=root
+      - DB_PASS=password
+      - DB_NAME=testdb
     depends_on:
       - mysql
 
